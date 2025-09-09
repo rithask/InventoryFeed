@@ -13,7 +13,9 @@ import com.litmus7.inventoryfeed.model.Product;
 import com.litmus7.inventoryfeed.util.DatabaseConnectionUtil;
 
 public class InventoryDao {
-	public boolean createProduct(Product product) {
+	public boolean createProduct(Product product) throws SQLException {
+		DatabaseConnectionUtil.createTableIfNotExists();
+
 		try (Connection connection = DatabaseConnectionUtil.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(SQLQueries.INSERT_PRODUCT)) {
 			preparedStatement.setInt(1, product.getSku());
@@ -48,7 +50,9 @@ public class InventoryDao {
 		return products;
 	}
 
-	public boolean createProducts(List<Product> products) {
+	public boolean createProducts(List<Product> products) throws SQLException {
+		DatabaseConnectionUtil.createTableIfNotExists();
+
 		Connection connection = null;
 		try {
 			connection = DatabaseConnectionUtil.getConnection();
